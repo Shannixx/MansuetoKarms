@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MansuetoKarms.ViewModels"
+             xmlns:m="clr-namespace:MansuetoKarms.Models"
+             x:Class="MansuetoKarms.Views.MainView"
+             x:DataType="vm:MainViewModel"
+             BackgroundColor="#F0F4F8"
+             Title="{Binding Title}">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*"
+          Padding="16,12"
+          RowSpacing="10">
+
+        <!-- ROW 0 — Header -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+            <StackLayout Grid.Column="0" Spacing="2">
+                <Label Text="🚗 Rent A Vehicle"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       TextColor="#0D47A1" />
+                <Label Text="Vehicle Fleet Management"
+                       FontSize="12"
+                       TextColor="#9E9E9E" />
+            </StackLayout>
+
+            <Button Grid.Column="1"
+                    Text="＋ Add Vehicle"
+                    Command="{Binding NavigateToCreateCommand}"
+                    BackgroundColor="#1565C0"
+                    TextColor="White"
+                    CornerRadius="10"
+                    Padding="14,10"
+                    FontAttributes="Bold"
+                    FontSize="13"
+                    VerticalOptions="Center" />
+        </Grid>
+
+        <!-- ROW 1 — Archive Toggle -->
+        <Frame Grid.Row="1"
+               Padding="14,10"
+               CornerRadius="12"
+               BackgroundColor="White"
+               BorderColor="#E0E0E0"
+               HasShadow="False">
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Grid.Column="0"
+                       Text="🗃️  Show Archived Vehicles"
+                       FontSize="14"
+                       TextColor="#424242"
+                       VerticalOptions="Center" />
+                <Switch Grid.Column="1"
+                        IsToggled="{Binding ShowDeleted}"
+                        OnColor="#E53935" />
+            </Grid>
+        </Frame>
+
+        <!-- ROW 2 — Loading -->
+        <ActivityIndicator Grid.Row="2"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           Color="#1565C0"
+                           HeightRequest="36" />
+
+        <!-- ROW 3 — Vehicle List -->
+        <CollectionView Grid.Row="3"
+                        ItemsSource="{Binding Vehicles}">
+
+            <CollectionView.EmptyView>
+                <StackLayout VerticalOptions="Center"
+                             HorizontalOptions="Center"
+                             Spacing="10"
+                             Padding="20">
+                    <Label Text="🚫"
+                           FontSize="56"
+                           HorizontalOptions="Center" />
+                    <Label Text="No vehicles found."
+                           FontSize="16"
+                           TextColor="#9E9E9E"
+                           HorizontalOptions="Center" />
+                    <Label Text="Tap ＋ Add Vehicle to get started."
+                           FontSize="13"
+                           TextColor="#BDBDBD"
+                           HorizontalOptions="Center" />
+                </StackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:Vehicle">
+                    <Frame Margin="0,5"
+                           Padding="16"
+                           CornerRadius="14"
+                           BorderColor="#E0E0E0"
+                           HasShadow="True"
+                           BackgroundColor="{Binding IsDeleted, Converter={StaticResource DeletedColorConverter}}">
+
+                        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                              RowSpacing="7">
+
+                            <!-- ROW 0 — Name + Type + Archived -->
+                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                                <HorizontalStackLayout Grid.Column="0" Spacing="8">
+                                    <Label Text="{Binding DisplayName}"
+                                           FontSize="17"
+                                           FontAttributes="Bold"
+                                           TextColor="#0D47A1"
+                                           VerticalOptions="Center" />
+                                    <Frame Padding="7,3"
+                                           CornerRadius="6"
+                                           BackgroundColor="#E3F2FD"
+                                           BorderColor="Transparent">
+                                        <Label Text="{Binding Type}"
+                                               FontSize="11"
+                                               TextColor="#1565C0" />
+                                    </Frame>
+                                </HorizontalStackLayout>
+
+                                <Frame Grid.Column="1"
+                                       Padding="7,3"
+                                       CornerRadius="6"
+                                       BackgroundColor="#FFCCBC"
+                                       BorderColor="Transparent"
+                                       IsVisible="{Binding IsDeleted}">
+                                    <Label Text="ARCHIVED"
+                                           FontSize="10"
+                                           TextColor="#BF360C"
+                                           FontAttributes="Bold" />
+                                </Frame>
+                            </Grid>
+
+                            <!-- ROW 1 — Plate + Color + Seats -->
+                            <HorizontalStackLayout Grid.Row="1" Spacing="14">
+                                <Label Text="{Binding PlateNumber, StringFormat='🪪 {0}'}"
+                                       FontSize="13"
+                                       FontAttributes="Bold"
+                                       TextColor="#37474F" />
+                                <Label Text="{Binding Color, StringFormat='🎨 {0}'}"
+                                       FontSize="13"
+                                       TextColor="#607D8B" />
+                                <Label Text="{Binding Seats, StringFormat='💺 {0} seats'}"
+                                       FontSize="13"
+                                       TextColor="#607D8B" />
+                            </HorizontalStackLayout>
+
+                            <!-- ROW 2 — Description -->
+                            <Label Grid.Row="2"
+                                   Text="{Binding Description}"
+                                   FontSize="12"
+                                   TextColor="#757575"
+                                   LineBreakMode="TailTruncation" />
+
+                            <!-- ROW 3 — Price + Status -->
+                            <HorizontalStackLayout Grid.Row="3" Spacing="12">
+                                <Label Text="{Binding PricePerDay, StringFormat='₱{0:N0}/day'}"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="#1B5E20"
+                                       VerticalOptions="Center" />
+                                <Frame Padding="10,4"
+                                       CornerRadius="8"
+                                       BackgroundColor="{Binding StatusBg}"
+                                       BorderColor="Transparent">
+                                    <Label Text="{Binding Status}"
+                                           FontSize="12"
+                                           FontAttributes="Bold"
+                                           TextColor="{Binding StatusColor}" />
+                                </Frame>
+                            </HorizontalStackLayout>
+
+                            <!-- ROW 4 — Action Buttons -->
+                            <HorizontalStackLayout Grid.Row="4"
+                                                   Spacing="6"
+                                                   HorizontalOptions="End"
+                                                   Margin="0,4,0,0">
+
+                                <!-- EDIT -->
+                                <Button Text="✏️ Edit"
+                                        FontSize="12"
+                                        BackgroundColor="#1976D2"
+                                        TextColor="White"
+                                        CornerRadius="8"
+                                        Padding="12,7"
+                                        IsVisible="{Binding IsDeleted, Converter={StaticResource InverseBoolConverter}}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.NavigateToUpdateCommand}"
+                                        CommandParameter="{Binding .}" />
+
+                                <!-- ARCHIVE -->
+                                <Button Text="🗃️ Archive"
+                                        FontSize="12"
+                                        BackgroundColor="#F57C00"
+                                        TextColor="White"
+                                        CornerRadius="8"
+                                        Padding="12,7"
+                                        IsVisible="{Binding IsDeleted, Converter={StaticResource InverseBoolConverter}}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SoftDeleteCommand}"
+                                        CommandParameter="{Binding .}" />
+
+                                <!-- RESTORE -->
+                                <Button Text="♻️ Restore"
+                                        FontSize="12"
+                                        BackgroundColor="#388E3C"
+                                        TextColor="White"
+                                        CornerRadius="8"
+                                        Padding="12,7"
+                                        IsVisible="{Binding IsDeleted}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RestoreCommand}"
+                                        CommandParameter="{Binding .}" />
+
+                                <!-- HARD DELETE -->
+                                <Button Text="🗑️ Delete"
+                                        FontSize="12"
+                                        BackgroundColor="#C62828"
+                                        TextColor="White"
+                                        CornerRadius="8"
+                                        Padding="12,7"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.HardDeleteCommand}"
+                                        CommandParameter="{Binding .}" />
+                            </HorizontalStackLayout>
+
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+    </Grid>
+
+</ContentPage>

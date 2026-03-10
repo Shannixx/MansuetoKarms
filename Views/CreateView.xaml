@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MansuetoKarms.ViewModels"
+             x:Class="MansuetoKarms.Views.CreateView"
+             x:DataType="vm:CreateViewModel"
+             BackgroundColor="#F0F4F8"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="16">
+
+            <!-- Section 1 — Page Header -->
+            <Label Text="🚘 Add New Vehicle"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   TextColor="#0D47A1" />
+            <Label Text="Fill in the vehicle details below."
+                   FontSize="13"
+                   TextColor="#9E9E9E"
+                   Margin="0,-10,0,0" />
+
+            <!-- Section 2 — White Form Card -->
+            <Frame Padding="20"
+                   CornerRadius="14"
+                   BackgroundColor="White"
+                   BorderColor="#E0E0E0"
+                   HasShadow="True">
+                <StackLayout Spacing="14">
+
+                    <!-- Field 1 — Brand -->
+                    <StackLayout Spacing="4">
+                        <Label Text="Brand  *"
+                               FontAttributes="Bold"
+                               FontSize="13"
+                               TextColor="#424242" />
+                        <Entry Placeholder="e.g. Toyota"
+                               Text="{Binding Brand}"
+                               BackgroundColor="#FAFAFA" />
+                    </StackLayout>
+
+                    <!-- Field 2 — Model/Name -->
+                    <StackLayout Spacing="4">
+                        <Label Text="Model / Name  *"
+                               FontAttributes="Bold"
+                               FontSize="13"
+                               TextColor="#424242" />
+                        <Entry Placeholder="e.g. Fortuner, Vios"
+                               Text="{Binding Name}"
+                               BackgroundColor="#FAFAFA" />
+                    </StackLayout>
+
+                    <!-- Field 3 — Vehicle Type -->
+                    <StackLayout Spacing="4">
+                        <Label Text="Vehicle Type"
+                               FontAttributes="Bold"
+                               FontSize="13"
+                               TextColor="#424242" />
+                        <Picker ItemsSource="{Binding VehicleTypes}"
+                                SelectedItem="{Binding Type}"
+                                Title="Select type"
+                                BackgroundColor="#FAFAFA" />
+                    </StackLayout>
+
+                    <!-- Field 4 — Plate Number -->
+                    <StackLayout Spacing="4">
+                        <Label Text="Plate Number  *"
+                               FontAttributes="Bold"
+                               FontSize="13"
+                               TextColor="#424242" />
+                        <Entry Placeholder="e.g. ABC 1234"
+                               Text="{Binding PlateNumber}"
+                               BackgroundColor="#FAFAFA" />
+                    </StackLayout>
+
+                    <!-- Field 5 — Color -->
+                    <StackLayout Spacing="4">
+                        <Label Text="Color"
+                               FontAttributes="Bold"
+                               FontSize="13"
+                               TextColor="#424242" />
+                        <Entry Placeholder="e.g. White, Black"
+                               Text="{Binding Color}"
+                               BackgroundColor="#FAFAFA" />
+                    </StackLayout>
+
+                    <!-- Field 6 — Price Per Day -->
+                    <StackLayout Spacing="4">
+                        <Label Text="Price Per Day (₱)  *"
+                               FontAttributes="Bold"
+                               FontSize="13"
+                               TextColor="#424242" />
+                        <Entry Placeholder="0.00"
+                               Text="{Binding PricePerDay}"
+                               Keyboard="Numeric"
+                               BackgroundColor="#FAFAFA" />
+                    </StackLayout>
+
+                    <!-- Field 7 — Seats -->
+                    <StackLayout Spacing="4">
+                        <Label Text="Number of Seats  *"
+                               FontAttributes="Bold"
+                               FontSize="13"
+                               TextColor="#424242" />
+                        <Entry Placeholder="e.g. 5"
+                               Text="{Binding Seats}"
+                               Keyboard="Numeric"
+                               BackgroundColor="#FAFAFA" />
+                    </StackLayout>
+
+                    <!-- Field 8 — Status -->
+                    <StackLayout Spacing="4">
+                        <Label Text="Status"
+                               FontAttributes="Bold"
+                               FontSize="13"
+                               TextColor="#424242" />
+                        <Picker ItemsSource="{Binding StatusOptions}"
+                                SelectedItem="{Binding Status}"
+                                Title="Select status"
+                                BackgroundColor="#FAFAFA" />
+                    </StackLayout>
+
+                    <!-- Field 9 — Description -->
+                    <StackLayout Spacing="4">
+                        <Label Text="Description"
+                               FontAttributes="Bold"
+                               FontSize="13"
+                               TextColor="#424242" />
+                        <Editor Placeholder="Additional notes..."
+                                Text="{Binding Description}"
+                                HeightRequest="85"
+                                BackgroundColor="#FAFAFA" />
+                    </StackLayout>
+
+                </StackLayout>
+            </Frame>
+
+            <!-- Section 3 — Two Buttons -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Button Grid.Column="0"
+                        Text="Cancel"
+                        Command="{Binding CancelCommand}"
+                        BackgroundColor="#ECEFF1"
+                        TextColor="#546E7A"
+                        CornerRadius="10"
+                        Padding="0,14"
+                        FontAttributes="Bold" />
+                <Button Grid.Column="1"
+                        Text="💾  Save Vehicle"
+                        Command="{Binding SaveCommand}"
+                        BackgroundColor="#1565C0"
+                        TextColor="White"
+                        CornerRadius="10"
+                        Padding="0,14"
+                        FontAttributes="Bold" />
+            </Grid>
+
+            <!-- Section 4 — Loading -->
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}"
+                               Color="#1565C0" />
+
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>
