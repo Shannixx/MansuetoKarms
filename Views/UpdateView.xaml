@@ -36,6 +36,7 @@
                                TextColor="#424242" />
                         <Entry Placeholder="e.g. Toyota"
                                Text="{Binding Brand}"
+                               TextColor="#333333"
                                BackgroundColor="#FAFAFA" />
                     </StackLayout>
 
@@ -47,6 +48,7 @@
                                TextColor="#424242" />
                         <Entry Placeholder="e.g. Fortuner, Vios"
                                Text="{Binding Name}"
+                               TextColor="#333333"
                                BackgroundColor="#FAFAFA" />
                     </StackLayout>
 
@@ -59,6 +61,7 @@
                         <Picker ItemsSource="{Binding VehicleTypes}"
                                 SelectedItem="{Binding Type}"
                                 Title="Select type"
+                                TextColor="#333333"
                                 BackgroundColor="#FAFAFA" />
                     </StackLayout>
 
@@ -70,6 +73,7 @@
                                TextColor="#424242" />
                         <Entry Placeholder="e.g. ABC 1234"
                                Text="{Binding PlateNumber}"
+                               TextColor="#333333"
                                BackgroundColor="#FAFAFA" />
                     </StackLayout>
 
@@ -81,6 +85,7 @@
                                TextColor="#424242" />
                         <Entry Placeholder="e.g. White, Black"
                                Text="{Binding Color}"
+                               TextColor="#333333"
                                BackgroundColor="#FAFAFA" />
                     </StackLayout>
 
@@ -93,6 +98,7 @@
                         <Entry Placeholder="0.00"
                                Text="{Binding PricePerDay}"
                                Keyboard="Numeric"
+                               TextColor="#333333"
                                BackgroundColor="#FAFAFA" />
                     </StackLayout>
 
@@ -105,6 +111,7 @@
                         <Entry Placeholder="e.g. 5"
                                Text="{Binding Seats}"
                                Keyboard="Numeric"
+                               TextColor="#333333"
                                BackgroundColor="#FAFAFA" />
                     </StackLayout>
 
@@ -117,6 +124,7 @@
                         <Picker ItemsSource="{Binding StatusOptions}"
                                 SelectedItem="{Binding Status}"
                                 Title="Select status"
+                                TextColor="#333333"
                                 BackgroundColor="#FAFAFA" />
                     </StackLayout>
 
@@ -129,6 +137,7 @@
                         <Editor Placeholder="Additional notes..."
                                 Text="{Binding Description}"
                                 HeightRequest="85"
+                                TextColor="#333333"
                                 BackgroundColor="#FAFAFA" />
                     </StackLayout>
 
