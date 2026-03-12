@@ -16,6 +16,10 @@ namespace MansuetoKarms
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("Poppins-Regular.ttf", "PoppinsRegular");
+                    fonts.AddFont("Poppins-Medium.ttf", "PoppinsMedium");
+                    fonts.AddFont("Poppins-SemiBold.ttf", "PoppinsSemiBold");
+                    fonts.AddFont("Poppins-Bold.ttf", "PoppinsBold");
                 });
 
             // Register HttpClient and Services
