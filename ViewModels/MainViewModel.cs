@@ -11,11 +11,12 @@ namespace MansuetoKarms.ViewModels
     public class MainViewModel : INotifyPropertyChanged
     {
         private readonly VehicleService _vehicleService;
+        private readonly DeleteHistoryService _deleteHistoryService;
         private string _title = "Rent A Vehicle";
         private bool _isBusy;
-        private bool _showDeleted;
         private ObservableCollection<Vehicle> _vehicles = new();
         private List<Vehicle> _allVehicles = new();
+        private int _archivedCount;
 
         public string Title
         {
@@ -29,32 +30,28 @@ namespace MansuetoKarms.ViewModels
             set { _isBusy = value; OnPropertyChanged(); }
         }
 
-        public bool ShowDeleted
-        {
-            get => _showDeleted;
-            set
-            {
-                _showDeleted = value;
-                OnPropertyChanged();
-                FilterVehicles();
-            }
-        }
-
         public ObservableCollection<Vehicle> Vehicles
         {
             get => _vehicles;
             set { _vehicles = value; OnPropertyChanged(); }
         }
 
+        public int ArchivedCount
+        {
+            get => _archivedCount;
+            set { _archivedCount = value; OnPropertyChanged(); }
+        }
+
         public ICommand NavigateToCreateCommand { get; }
         public ICommand NavigateToUpdateCommand { get; }
+        public ICommand NavigateToArchiveCommand { get; }
         public ICommand SoftDeleteCommand { get; }
-        public ICommand RestoreCommand { get; }
         public ICommand HardDeleteCommand { get; }
 
-        public MainViewModel(VehicleService vehicleService)
+        public MainViewModel(VehicleService vehicleService, DeleteHistoryService deleteHistoryService)
         {
             _vehicleService = vehicleService;
+            _deleteHistoryService = deleteHistoryService;
 
             NavigateToCreateCommand = new Command(async () =>
             {
@@ -67,12 +64,18 @@ namespace MansuetoKarms.ViewModels
                 await Shell.Current.GoToAsync($"{nameof(UpdateView)}?id={vehicle.Id}");
             });
 
+            NavigateToArchiveCommand = new Command(async () =>
+            {
+                await Shell.Current.GoToAsync(nameof(ArchiveView));
+            });
+
+            // Archive = soft delete, moves to Archive section
             SoftDeleteCommand = new Command<Vehicle>(async (vehicle) =>
             {
                 if (vehicle == null) return;
                 bool confirm = await Shell.Current.DisplayAlert(
                     "Archive Vehicle",
-                    $"Archive {vehicle.DisplayName}? It can be restored later.",
+                    $"Archive {vehicle.DisplayName}? You can unarchive it later.",
                     "Archive", "Cancel");
                 if (!confirm) return;
 
@@ -92,37 +95,20 @@ namespace MansuetoKarms.ViewModels
                 }
             });
 
-            RestoreCommand = new Command<Vehicle>(async (vehicle) =>
-            {
-                if (vehicle == null) return;
-                try
-                {
-                    IsBusy = true;
-                    await _vehicleService.RestoreVehicleAsync(vehicle.Id);
-                    await LoadVehiclesAsync();
-                }
-                catch (Exception ex)
-                {
-                    await Shell.Current.DisplayAlert("Error", $"Failed to restore: {ex.Message}", "OK");
-                }
-                finally
-                {
-                    IsBusy = false;
-                }
-            });
-
+            // Delete = hard delete from API, but save locally so it can be restored
             HardDeleteCommand = new Command<Vehicle>(async (vehicle) =>
             {
                 if (vehicle == null) return;
                 bool confirm = await Shell.Current.DisplayAlert(
-                    "Delete Permanently",
-                    $"Permanently delete {vehicle.DisplayName}? This cannot be undone.",
+                    "Delete Vehicle",
+                    $"Delete {vehicle.DisplayName}? You can restore it from the Deleted section.",
                     "Delete", "Cancel");
                 if (!confirm) return;
 
                 try
                 {
                     IsBusy = true;
+                    _deleteHistoryService.AddDeletedVehicle(vehicle);
                     await _vehicleService.HardDeleteVehicleAsync(vehicle.Id);
                     await LoadVehiclesAsync();
                 }
@@ -145,7 +131,9 @@ namespace MansuetoKarms.ViewModels
             {
                 IsBusy = true;
                 _allVehicles = await _vehicleService.GetVehiclesAsync();
-                FilterVehicles();
+                var active = _allVehicles.Where(v => !v.IsDeleted).ToList();
+                Vehicles = new ObservableCollection<Vehicle>(active);
+                ArchivedCount = _allVehicles.Count(v => v.IsDeleted);
             }
             catch (Exception ex)
             {
@@ -155,15 +143,6 @@ namespace MansuetoKarms.ViewModels
             {
                 IsBusy = false;
             }
-        }
-
-        private void FilterVehicles()
-        {
-            var filtered = ShowDeleted
-                ? _allVehicles
-                : _allVehicles.Where(v => !v.IsDeleted).ToList();
-
-            Vehicles = new ObservableCollection<Vehicle>(filtered);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

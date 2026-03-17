@@ -2,11 +2,11 @@ using System.Text.Json.Serialization;
 
 namespace MansuetoKarms.Models
 {
-    public class Vehicle
+    /// <summary>
+    /// Stores a deleted vehicle's full data locally so it can be restored later.
+    /// </summary>
+    public class DeletedVehicleItem
     {
-        [JsonPropertyName("id")]
-        public string Id { get; set; } = string.Empty;
-
         [JsonPropertyName("name")]
         public string Name { get; set; } = string.Empty;
 
@@ -34,31 +34,32 @@ namespace MansuetoKarms.Models
         [JsonPropertyName("description")]
         public string Description { get; set; } = string.Empty;
 
-        [JsonPropertyName("isDeleted")]
-        public bool IsDeleted { get; set; }
+        [JsonPropertyName("deletedAt")]
+        public DateTime DeletedAt { get; set; }
 
-        // Computed display properties (not serialized to API)
         [JsonIgnore]
         public string DisplayName => string.IsNullOrWhiteSpace(Brand)
             ? Name
             : $"{Brand} {Name}";
 
         [JsonIgnore]
-        public Color StatusBg => Status switch
-        {
-            "Available" => Microsoft.Maui.Graphics.Color.FromArgb("#D6EAF8"),
-            "Rented" => Microsoft.Maui.Graphics.Color.FromArgb("#E8F6FF"),
-            "Maintenance" => Microsoft.Maui.Graphics.Color.FromArgb("#FFF3E0"),
-            _ => Colors.Transparent
-        };
+        public string DeletedAtFormatted => DeletedAt.ToString("MMM dd, yyyy  h:mm tt");
 
-        [JsonIgnore]
-        public Color StatusColor => Status switch
+        /// <summary>
+        /// Converts back to a Vehicle for re-creating in the API.
+        /// </summary>
+        public Vehicle ToVehicle() => new Vehicle
         {
-            "Available" => Microsoft.Maui.Graphics.Color.FromArgb("#0A1931"),
-            "Rented" => Microsoft.Maui.Graphics.Color.FromArgb("#1565C0"),
-            "Maintenance" => Microsoft.Maui.Graphics.Color.FromArgb("#E65100"),
-            _ => Colors.Black
+            Brand = Brand,
+            Name = Name,
+            Type = Type,
+            PlateNumber = PlateNumber,
+            Color = Color,
+            PricePerDay = PricePerDay,
+            Seats = Seats,
+            Status = Status,
+            Description = Description,
+            IsDeleted = false
         };
     }
 }

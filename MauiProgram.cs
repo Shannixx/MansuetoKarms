@@ -25,16 +25,19 @@ namespace MansuetoKarms
             // Register HttpClient and Services
             builder.Services.AddSingleton<HttpClient>();
             builder.Services.AddSingleton<VehicleService>();
+            builder.Services.AddSingleton<DeleteHistoryService>();
 
             // Register ViewModels
             builder.Services.AddTransient<MainViewModel>();
             builder.Services.AddTransient<CreateViewModel>();
             builder.Services.AddTransient<UpdateViewModel>();
+            builder.Services.AddTransient<ArchiveViewModel>();
 
             // Register Views
             builder.Services.AddTransient<MainView>();
             builder.Services.AddTransient<CreateView>();
             builder.Services.AddTransient<UpdateView>();
+            builder.Services.AddTransient<ArchiveView>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

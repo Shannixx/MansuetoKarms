@@ -5,12 +5,12 @@
              xmlns:m="clr-namespace:MansuetoKarms.Models"
              x:Class="MansuetoKarms.Views.MainView"
              x:DataType="vm:MainViewModel"
-             BackgroundColor="#F5F5F7"
+             BackgroundColor="#EAF2FB"
              Title="{Binding Title}">
 
     <Grid RowDefinitions="Auto,Auto,Auto,*"
-          Padding="20,16"
-          RowSpacing="14">
+          Padding="24,20"
+          RowSpacing="16">
 
         <!-- HEADER -->
         <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
@@ -18,40 +18,64 @@
                 <Label Text="Vehicles"
                        FontSize="28"
                        FontFamily="PoppinsBold"
-                       TextColor="#1A1A2E" />
+                       TextColor="#0A1931" />
                 <Label Text="Fleet Management"
                        FontSize="13"
-                       TextColor="#8E8E93" />
+                       TextColor="#5B7AA5" />
             </StackLayout>
 
             <Button Grid.Column="1"
                     Text="+ Add"
                     Command="{Binding NavigateToCreateCommand}"
-                    BackgroundColor="#1A1A2E"
+                    BackgroundColor="#1565C0"
                     TextColor="White"
                     CornerRadius="12"
-                    Padding="20,10"
+                    Padding="24,12"
                     FontFamily="PoppinsSemiBold"
                     FontSize="14"
+                    HeightRequest="46"
                     VerticalOptions="Center" />
         </Grid>
 
-        <!-- ARCHIVE TOGGLE -->
+        <!-- ARCHIVE NAVIGATION BUTTON -->
         <Border Grid.Row="1"
-                Padding="16,12"
                 StrokeShape="RoundRectangle 12"
-                Stroke="#E5E5EA"
+                Stroke="#B0CBE8"
                 StrokeThickness="1"
                 BackgroundColor="White">
-            <Grid ColumnDefinitions="*,Auto">
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateToArchiveCommand}" />
+            </Border.GestureRecognizers>
+            <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="12" Padding="16,14">
                 <Label Grid.Column="0"
-                       Text="Show Archived"
-                       FontSize="14"
-                       TextColor="#3A3A3C"
+                       Text="📦"
+                       FontSize="22"
                        VerticalOptions="Center" />
-                <Switch Grid.Column="1"
-                        IsToggled="{Binding ShowDeleted}"
-                        OnColor="#FF3B30" />
+                <StackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                    <Label Text="Archive &amp; Deleted"
+                           FontSize="14"
+                           FontFamily="PoppinsSemiBold"
+                           TextColor="#0A1931" />
+                    <Label Text="View archived &amp; deleted vehicles"
+                           FontSize="11"
+                           TextColor="#5B7AA5" />
+                </StackLayout>
+                <Border Grid.Column="2"
+                        Padding="10,4"
+                        StrokeShape="RoundRectangle 10"
+                        Stroke="Transparent"
+                        BackgroundColor="#0A1931"
+                        VerticalOptions="Center">
+                    <Label Text="{Binding ArchivedCount}"
+                           FontSize="13"
+                           FontFamily="PoppinsBold"
+                           TextColor="White" />
+                </Border>
+                <Label Grid.Column="3"
+                       Text="›"
+                       FontSize="22"
+                       TextColor="#5B7AA5"
+                       VerticalOptions="Center" />
             </Grid>
         </Border>
 
@@ -59,7 +83,7 @@
         <ActivityIndicator Grid.Row="2"
                            IsRunning="{Binding IsBusy}"
                            IsVisible="{Binding IsBusy}"
-                           Color="#1A1A2E"
+                           Color="#1565C0"
                            HeightRequest="32" />
 
         <!-- VEHICLE LIST -->
@@ -69,90 +93,77 @@
             <CollectionView.EmptyView>
                 <StackLayout VerticalOptions="Center"
                              HorizontalOptions="Center"
-                             Spacing="8"
+                             Spacing="10"
                              Padding="24">
                     <Label Text="No vehicles"
                            FontSize="18"
                            FontAttributes="Bold"
-                           TextColor="#3A3A3C"
+                           TextColor="#0A1931"
                            HorizontalOptions="Center" />
                     <Label Text="Tap + Add to get started"
                            FontSize="13"
-                           TextColor="#8E8E93"
+                           TextColor="#5B7AA5"
                            HorizontalOptions="Center" />
                 </StackLayout>
             </CollectionView.EmptyView>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="m:Vehicle">
-                    <Border Margin="0,5"
-                            Padding="16"
+                    <Border Margin="0,6"
+                            Padding="18"
                             StrokeShape="RoundRectangle 14"
-                            Stroke="#E5E5EA"
+                            Stroke="#B0CBE8"
                             StrokeThickness="1"
-                            BackgroundColor="{Binding IsDeleted, Converter={StaticResource DeletedColorConverter}}">
+                            BackgroundColor="White">
 
                         <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto"
-                              RowSpacing="8">
+                              RowSpacing="10">
 
-                            <!-- ROW 0 — Name + Type + Archived Badge -->
-                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                                <HorizontalStackLayout Grid.Column="0" Spacing="10">
-                                    <Label Text="{Binding DisplayName}"
-                                           FontSize="17"
-                                           FontFamily="PoppinsSemiBold"
-                                           TextColor="#1A1A2E"
-                                           VerticalOptions="Center" />
-                                    <Border Padding="8,3"
-                                            StrokeShape="RoundRectangle 6"
-                                            Stroke="Transparent"
-                                            BackgroundColor="#F0F0F5">
-                                        <Label Text="{Binding Type}"
-                                               FontSize="11"
-                                               TextColor="#636366" />
-                                    </Border>
-                                </HorizontalStackLayout>
-
-                                <Border Grid.Column="1"
-                                        Padding="8,3"
+                            <!-- ROW 0 — Name + Type -->
+                            <HorizontalStackLayout Grid.Row="0" Spacing="10">
+                                <Label Text="{Binding DisplayName}"
+                                       FontSize="17"
+                                       FontFamily="PoppinsSemiBold"
+                                       TextColor="#0A1931"
+                                       VerticalOptions="Center" />
+                                <Border Padding="8,3"
                                         StrokeShape="RoundRectangle 6"
                                         Stroke="Transparent"
-                                        BackgroundColor="#FFEBE6"
-                                        IsVisible="{Binding IsDeleted}">
-                                    <Label Text="ARCHIVED"
-                                           FontSize="10"
-                                           TextColor="#C0392B"
-                                           FontFamily="PoppinsSemiBold" />
+                                        BackgroundColor="#D6EAF8">
+                                    <Label Text="{Binding Type}"
+                                           FontSize="11"
+                                           TextColor="#1565C0" />
                                 </Border>
-                            </Grid>
+                            </HorizontalStackLayout>
 
                             <!-- ROW 1 — Plate / Color / Seats -->
                             <HorizontalStackLayout Grid.Row="1" Spacing="16">
                                 <Label Text="{Binding PlateNumber}"
                                        FontSize="13"
                                        FontFamily="PoppinsMedium"
-                                       TextColor="#3A3A3C" />
+                                       TextColor="#0A1931" />
                                 <Label Text="{Binding Color}"
                                        FontSize="13"
-                                       TextColor="#636366" />
+                                       TextColor="#5B7AA5" />
                                 <Label Text="{Binding Seats, StringFormat='{0} seats'}"
                                        FontSize="13"
-                                       TextColor="#636366" />
+                                       TextColor="#5B7AA5" />
                             </HorizontalStackLayout>
 
                             <!-- ROW 2 — Description -->
                             <Label Grid.Row="2"
                                    Text="{Binding Description}"
                                    FontSize="12"
-                                   TextColor="#8E8E93"
-                                   LineBreakMode="TailTruncation" />
+                                   TextColor="#7BA0C7"
+                                   LineBreakMode="TailTruncation"
+                                   MaxLines="2" />
 
                             <!-- ROW 3 — Price + Status -->
                             <HorizontalStackLayout Grid.Row="3" Spacing="12">
                                 <Label Text="{Binding PricePerDay, StringFormat='P{0:N0}/day'}"
                                        FontSize="18"
                                        FontFamily="PoppinsSemiBold"
-                                       TextColor="#1A1A2E"
+                                       TextColor="#0A1931"
                                        VerticalOptions="Center" />
                                 <Border Padding="10,4"
                                         StrokeShape="RoundRectangle 8"
@@ -166,39 +177,34 @@
                             </HorizontalStackLayout>
 
                             <!-- ROW 4 — Action Buttons -->
-                            <HorizontalStackLayout Grid.Row="4"
-                                                   Spacing="8"
-                                                   HorizontalOptions="End"
-                                                   Margin="0,4,0,0">
+                            <FlexLayout Grid.Row="4"
+                                        Wrap="Wrap"
+                                        JustifyContent="End"
+                                        AlignItems="Center"
+                                        Margin="0,6,0,0">
 
                                 <Button Text="Edit"
                                         FontSize="12"
-                                        BackgroundColor="#1A1A2E"
+                                        BackgroundColor="#1565C0"
                                         TextColor="White"
                                         CornerRadius="8"
-                                        Padding="16,8"
-                                        IsVisible="{Binding IsDeleted, Converter={StaticResource InverseBoolConverter}}"
+                                        Padding="18,9"
+                                        Margin="4,4"
+                                        MinimumWidthRequest="70"
+                                        HeightRequest="38"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.NavigateToUpdateCommand}"
                                         CommandParameter="{Binding .}" />
 
                                 <Button Text="Archive"
                                         FontSize="12"
-                                        BackgroundColor="#F5A623"
-                                        TextColor="White"
+                                        BackgroundColor="#87CEEB"
+                                        TextColor="#0A1931"
                                         CornerRadius="8"
-                                        Padding="16,8"
-                                        IsVisible="{Binding IsDeleted, Converter={StaticResource InverseBoolConverter}}"
+                                        Padding="18,9"
+                                        Margin="4,4"
+                                        MinimumWidthRequest="80"
+                                        HeightRequest="38"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SoftDeleteCommand}"
-                                        CommandParameter="{Binding .}" />
-
-                                <Button Text="Restore"
-                                        FontSize="12"
-                                        BackgroundColor="#34C759"
-                                        TextColor="White"
-                                        CornerRadius="8"
-                                        Padding="16,8"
-                                        IsVisible="{Binding IsDeleted}"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RestoreCommand}"
                                         CommandParameter="{Binding .}" />
 
                                 <Button Text="Delete"
@@ -206,10 +212,13 @@
                                         BackgroundColor="#FF3B30"
                                         TextColor="White"
                                         CornerRadius="8"
-                                        Padding="16,8"
+                                        Padding="18,9"
+                                        Margin="4,4"
+                                        MinimumWidthRequest="70"
+                                        HeightRequest="38"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.HardDeleteCommand}"
                                         CommandParameter="{Binding .}" />
-                            </HorizontalStackLayout>
+                            </FlexLayout>
 
                         </Grid>
                     </Border>

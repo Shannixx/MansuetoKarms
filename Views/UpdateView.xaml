@@ -4,27 +4,27 @@
              xmlns:vm="clr-namespace:MansuetoKarms.ViewModels"
              x:Class="MansuetoKarms.Views.UpdateView"
              x:DataType="vm:UpdateViewModel"
-             BackgroundColor="#F5F5F7"
+             BackgroundColor="#EAF2FB"
              Title="{Binding Title}">
 
     <ScrollView>
-        <StackLayout Padding="20" Spacing="20">
+        <StackLayout Padding="24" Spacing="22">
 
             <!-- HEADER -->
             <StackLayout Spacing="4">
                 <Label Text="Edit Vehicle"
                        FontSize="26"
                        FontFamily="PoppinsBold"
-                       TextColor="#1A1A2E" />
+                       TextColor="#0A1931" />
                 <Label Text="Update the vehicle information below"
                        FontSize="13"
-                       TextColor="#8E8E93" />
+                       TextColor="#5B7AA5" />
             </StackLayout>
 
             <!-- FORM CARD -->
             <Border Padding="20"
                     StrokeShape="RoundRectangle 14"
-                    Stroke="#E5E5EA"
+                    Stroke="#B0CBE8"
                     StrokeThickness="1"
                     BackgroundColor="White">
                 <StackLayout Spacing="18">
@@ -34,16 +34,16 @@
                         <Label Text="Brand"
                                FontFamily="PoppinsMedium"
                                FontSize="13"
-                               TextColor="#3A3A3C" />
+                               TextColor="#0A1931" />
                         <Border Padding="12,10"
                                 StrokeShape="RoundRectangle 10"
-                                Stroke="#E5E5EA"
+                                Stroke="#B0CBE8"
                                 StrokeThickness="1"
-                                BackgroundColor="#FAFAFA">
+                                BackgroundColor="#F0F7FF">
                             <Entry Placeholder="e.g. Toyota"
                                    Text="{Binding Brand}"
-                                   TextColor="#1A1A2E"
-                                   PlaceholderColor="#C7C7CC"
+                                   TextColor="#0A1931"
+                                   PlaceholderColor="#7BA0C7"
                                    FontSize="14"
                                    BackgroundColor="Transparent" />
                         </Border>
@@ -54,16 +54,16 @@
                         <Label Text="Model / Name"
                                FontFamily="PoppinsMedium"
                                FontSize="13"
-                               TextColor="#3A3A3C" />
+                               TextColor="#0A1931" />
                         <Border Padding="12,10"
                                 StrokeShape="RoundRectangle 10"
-                                Stroke="#E5E5EA"
+                                Stroke="#B0CBE8"
                                 StrokeThickness="1"
-                                BackgroundColor="#FAFAFA">
+                                BackgroundColor="#F0F7FF">
                             <Entry Placeholder="e.g. Fortuner, Vios"
                                    Text="{Binding Name}"
-                                   TextColor="#1A1A2E"
-                                   PlaceholderColor="#C7C7CC"
+                                   TextColor="#0A1931"
+                                   PlaceholderColor="#7BA0C7"
                                    FontSize="14"
                                    BackgroundColor="Transparent" />
                         </Border>
@@ -74,17 +74,17 @@
                         <Label Text="Vehicle Type"
                                FontFamily="PoppinsMedium"
                                FontSize="13"
-                               TextColor="#3A3A3C" />
+                               TextColor="#0A1931" />
                         <Border Padding="12,10"
                                 StrokeShape="RoundRectangle 10"
-                                Stroke="#E5E5EA"
+                                Stroke="#B0CBE8"
                                 StrokeThickness="1"
-                                BackgroundColor="#FAFAFA">
+                                BackgroundColor="#F0F7FF">
                             <Picker ItemsSource="{Binding VehicleTypes}"
                                     SelectedItem="{Binding Type}"
                                     Title="Select type"
-                                    TextColor="#1A1A2E"
-                                    TitleColor="#C7C7CC"
+                                    TextColor="#0A1931"
+                                    TitleColor="#7BA0C7"
                                     FontSize="14"
                                     BackgroundColor="Transparent" />
                         </Border>
@@ -95,16 +95,16 @@
                         <Label Text="Plate Number"
                                FontFamily="PoppinsMedium"
                                FontSize="13"
-                               TextColor="#3A3A3C" />
+                               TextColor="#0A1931" />
                         <Border Padding="12,10"
                                 StrokeShape="RoundRectangle 10"
-                                Stroke="#E5E5EA"
+                                Stroke="#B0CBE8"
                                 StrokeThickness="1"
-                                BackgroundColor="#FAFAFA">
+                                BackgroundColor="#F0F7FF">
                             <Entry Placeholder="e.g. ABC 1234"
                                    Text="{Binding PlateNumber}"
-                                   TextColor="#1A1A2E"
-                                   PlaceholderColor="#C7C7CC"
+                                   TextColor="#0A1931"
+                                   PlaceholderColor="#7BA0C7"
                                    FontSize="14"
                                    BackgroundColor="Transparent" />
                         </Border>
@@ -115,16 +115,16 @@
                         <Label Text="Color"
                                FontFamily="PoppinsMedium"
                                FontSize="13"
-                               TextColor="#3A3A3C" />
+                               TextColor="#0A1931" />
                         <Border Padding="12,10"
                                 StrokeShape="RoundRectangle 10"
-                                Stroke="#E5E5EA"
+                                Stroke="#B0CBE8"
                                 StrokeThickness="1"
-                                BackgroundColor="#FAFAFA">
+                                BackgroundColor="#F0F7FF">
                             <Entry Placeholder="e.g. White, Black"
                                    Text="{Binding Color}"
-                                   TextColor="#1A1A2E"
-                                   PlaceholderColor="#C7C7CC"
+                                   TextColor="#0A1931"
+                                   PlaceholderColor="#7BA0C7"
                                    FontSize="14"
                                    BackgroundColor="Transparent" />
                         </Border>
@@ -135,17 +135,17 @@
                         <Label Text="Price Per Day (P)"
                                FontFamily="PoppinsMedium"
                                FontSize="13"
-                               TextColor="#3A3A3C" />
+                               TextColor="#0A1931" />
                         <Border Padding="12,10"
                                 StrokeShape="RoundRectangle 10"
-                                Stroke="#E5E5EA"
+                                Stroke="#B0CBE8"
                                 StrokeThickness="1"
-                                BackgroundColor="#FAFAFA">
+                                BackgroundColor="#F0F7FF">
                             <Entry Placeholder="0.00"
                                    Text="{Binding PricePerDay}"
                                    Keyboard="Numeric"
-                                   TextColor="#1A1A2E"
-                                   PlaceholderColor="#C7C7CC"
+                                   TextColor="#0A1931"
+                                   PlaceholderColor="#7BA0C7"
                                    FontSize="14"
                                    BackgroundColor="Transparent" />
                         </Border>
@@ -156,17 +156,17 @@
                         <Label Text="Number of Seats"
                                FontFamily="PoppinsMedium"
                                FontSize="13"
-                               TextColor="#3A3A3C" />
+                               TextColor="#0A1931" />
                         <Border Padding="12,10"
                                 StrokeShape="RoundRectangle 10"
-                                Stroke="#E5E5EA"
+                                Stroke="#B0CBE8"
                                 StrokeThickness="1"
-                                BackgroundColor="#FAFAFA">
+                                BackgroundColor="#F0F7FF">
                             <Entry Placeholder="e.g. 5"
                                    Text="{Binding Seats}"
                                    Keyboard="Numeric"
-                                   TextColor="#1A1A2E"
-                                   PlaceholderColor="#C7C7CC"
+                                   TextColor="#0A1931"
+                                   PlaceholderColor="#7BA0C7"
                                    FontSize="14"
                                    BackgroundColor="Transparent" />
                         </Border>
@@ -177,17 +177,17 @@
                         <Label Text="Status"
                                FontFamily="PoppinsMedium"
                                FontSize="13"
-                               TextColor="#3A3A3C" />
+                               TextColor="#0A1931" />
                         <Border Padding="12,10"
                                 StrokeShape="RoundRectangle 10"
-                                Stroke="#E5E5EA"
+                                Stroke="#B0CBE8"
                                 StrokeThickness="1"
-                                BackgroundColor="#FAFAFA">
+                                BackgroundColor="#F0F7FF">
                             <Picker ItemsSource="{Binding StatusOptions}"
                                     SelectedItem="{Binding Status}"
                                     Title="Select status"
-                                    TextColor="#1A1A2E"
-                                    TitleColor="#C7C7CC"
+                                    TextColor="#0A1931"
+                                    TitleColor="#7BA0C7"
                                     FontSize="14"
                                     BackgroundColor="Transparent" />
                         </Border>
@@ -198,17 +198,17 @@
                         <Label Text="Description"
                                FontFamily="PoppinsMedium"
                                FontSize="13"
-                               TextColor="#3A3A3C" />
+                               TextColor="#0A1931" />
                         <Border Padding="12,10"
                                 StrokeShape="RoundRectangle 10"
-                                Stroke="#E5E5EA"
+                                Stroke="#B0CBE8"
                                 StrokeThickness="1"
-                                BackgroundColor="#FAFAFA">
+                                BackgroundColor="#F0F7FF">
                             <Editor Placeholder="Additional notes..."
                                     Text="{Binding Description}"
-                                    HeightRequest="80"
-                                    TextColor="#1A1A2E"
-                                    PlaceholderColor="#C7C7CC"
+                                    HeightRequest="100"
+                                    TextColor="#0A1931"
+                                    PlaceholderColor="#7BA0C7"
                                     FontSize="14"
                                     BackgroundColor="Transparent" />
                         </Border>
@@ -217,32 +217,34 @@
                 </StackLayout>
             </Border>
 
-            <!-- BUTTONS -->
+            <!-- BUTTONS (Responsive) -->
             <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                 <Button Grid.Column="0"
                         Text="Cancel"
                         Command="{Binding CancelCommand}"
-                        BackgroundColor="#E5E5EA"
-                        TextColor="#3A3A3C"
+                        BackgroundColor="#D6EAF8"
+                        TextColor="#0A1931"
                         CornerRadius="12"
-                        Padding="0,14"
+                        HeightRequest="50"
                         FontFamily="PoppinsMedium"
-                        FontSize="14" />
+                        FontSize="15"
+                        HorizontalOptions="Fill" />
                 <Button Grid.Column="1"
                         Text="Update Vehicle"
                         Command="{Binding UpdateCommand}"
-                        BackgroundColor="#1A1A2E"
+                        BackgroundColor="#1565C0"
                         TextColor="White"
                         CornerRadius="12"
-                        Padding="0,14"
-                        FontFamily="PoppinsMedium"
-                        FontSize="14" />
+                        HeightRequest="50"
+                        FontFamily="PoppinsSemiBold"
+                        FontSize="15"
+                        HorizontalOptions="Fill" />
             </Grid>
 
             <!-- LOADING -->
             <ActivityIndicator IsRunning="{Binding IsBusy}"
                                IsVisible="{Binding IsBusy}"
-                               Color="#1A1A2E" />
+                               Color="#1565C0" />
 
         </StackLayout>
     </ScrollView>
