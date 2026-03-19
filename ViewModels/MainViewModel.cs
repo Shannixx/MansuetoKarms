@@ -12,7 +12,7 @@ namespace MansuetoKarms.ViewModels
     {
         private readonly VehicleService _vehicleService;
         private readonly DeleteHistoryService _deleteHistoryService;
-        private string _title = "Rent A Vehicle";
+        private string _title = "Monki Car Rental Vehicle";
         private bool _isBusy;
         private ObservableCollection<Vehicle> _vehicles = new();
         private List<Vehicle> _allVehicles = new();
