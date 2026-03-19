@@ -37,47 +37,72 @@
                     VerticalOptions="Center" />
         </Grid>
 
-        <!-- ARCHIVE NAVIGATION BUTTON -->
-        <Border Grid.Row="1"
-                StrokeShape="RoundRectangle 12"
-                Stroke="#B0CBE8"
-                StrokeThickness="1"
-                BackgroundColor="White">
-            <Border.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding NavigateToArchiveCommand}" />
-            </Border.GestureRecognizers>
-            <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="12" Padding="16,14">
-                <Label Grid.Column="0"
-                       Text="📦"
-                       FontSize="22"
-                       VerticalOptions="Center" />
-                <StackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
-                    <Label Text="Archive &amp; Deleted"
-                           FontSize="14"
-                           FontFamily="PoppinsSemiBold"
-                           TextColor="#0A1931" />
-                    <Label Text="View archived &amp; deleted vehicles"
-                           FontSize="11"
-                           TextColor="#5B7AA5" />
-                </StackLayout>
-                <Border Grid.Column="2"
-                        Padding="10,4"
-                        StrokeShape="RoundRectangle 10"
-                        Stroke="Transparent"
-                        BackgroundColor="#0A1931"
-                        VerticalOptions="Center">
-                    <Label Text="{Binding ArchivedCount}"
-                           FontSize="13"
-                           FontFamily="PoppinsBold"
-                           TextColor="White" />
-                </Border>
-                <Label Grid.Column="3"
-                       Text="›"
-                       FontSize="22"
-                       TextColor="#5B7AA5"
-                       VerticalOptions="Center" />
-            </Grid>
-        </Border>
+        <!-- ARCHIVE AND DELETE NAVIGATION BUTTONS -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,12,*" ColumnSpacing="12">
+
+            <!-- ARCHIVE BUTTON -->
+            <Border Grid.Column="0"
+                    StrokeShape="RoundRectangle 12"
+                    Stroke="#B0CBE8"
+                    StrokeThickness="1"
+                    BackgroundColor="White">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToArchiveCommand}" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10" Padding="14,12">
+                    <Label Grid.Column="0"
+                           Text="📦"
+                           FontSize="20"
+                           VerticalOptions="Center" />
+                    <StackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                        <Label Text="Archive"
+                               FontSize="14"
+                               FontFamily="PoppinsSemiBold"
+                               TextColor="#0A1931" />
+                        <Label Text="Archived vehicles"
+                               FontSize="11"
+                               TextColor="#5B7AA5" />
+                    </StackLayout>
+                    <Label Grid.Column="2"
+                           Text="›"
+                           FontSize="22"
+                           TextColor="#5B7AA5"
+                           VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <!-- DELETE BUTTON -->
+            <Border Grid.Column="2"
+                    StrokeShape="RoundRectangle 12"
+                    Stroke="#FFCDD2"
+                    StrokeThickness="1"
+                    BackgroundColor="White">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToDeleteCommand}" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10" Padding="14,12">
+                    <Label Grid.Column="0"
+                           Text="🗑️"
+                           FontSize="20"
+                           VerticalOptions="Center" />
+                    <StackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                        <Label Text="Deleted"
+                               FontSize="14"
+                               FontFamily="PoppinsSemiBold"
+                               TextColor="#0A1931" />
+                        <Label Text="Deleted vehicles"
+                               FontSize="11"
+                               TextColor="#5B7AA5" />
+                    </StackLayout>
+                    <Label Grid.Column="2"
+                           Text="›"
+                           FontSize="22"
+                           TextColor="#5B7AA5"
+                           VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+        </Grid>
 
         <!-- LOADING -->
         <ActivityIndicator Grid.Row="2"

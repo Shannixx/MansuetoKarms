@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:MansuetoKarms.ViewModels"
              xmlns:m="clr-namespace:MansuetoKarms.Models"
-             x:Class="MansuetoKarms.Views.ArchiveView"
-             x:DataType="vm:ArchiveViewModel"
+             x:Class="MansuetoKarms.Views.DeleteView"
+             x:DataType="vm:DeleteViewModel"
              BackgroundColor="#EAF2FB"
              Title="{Binding Title}">
 
@@ -25,11 +25,11 @@
                         Padding="0"
                         VerticalOptions="Center" />
                 <StackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
-                    <Label Text="Archived Vehicles"
+                    <Label Text="Deleted Vehicles"
                            FontSize="26"
                            FontFamily="PoppinsBold"
                            TextColor="#0A1931" />
-                    <Label Text="Manage your archived vehicles"
+                    <Label Text="Restore deleted vehicles to your fleet"
                            FontSize="12"
                            TextColor="#5B7AA5" />
                 </StackLayout>
@@ -40,17 +40,17 @@
                     StrokeShape="RoundRectangle 14"
                     Stroke="#B0CBE8"
                     StrokeThickness="1"
-                    BackgroundColor="#0A1931">
+                    BackgroundColor="#1565C0">
                 <StackLayout Spacing="6" HorizontalOptions="Center">
-                    <Label Text="{Binding ArchivedCount}"
+                    <Label Text="{Binding DeletedCount}"
                            FontSize="32"
                            FontFamily="PoppinsBold"
                            TextColor="White"
                            HorizontalOptions="Center" />
-                    <Label Text="Archived"
+                    <Label Text="Deleted"
                            FontSize="13"
                            FontFamily="PoppinsMedium"
-                           TextColor="#87CEEB"
+                           TextColor="#D6EAF8"
                            HorizontalOptions="Center" />
                 </StackLayout>
             </Border>
@@ -61,17 +61,17 @@
                                Color="#1565C0"
                                HeightRequest="32" />
 
-            <!-- ARCHIVED VEHICLES LIST -->
+            <!-- DELETED VEHICLES LIST -->
             <StackLayout Spacing="12">
-                <Label Text="Archived Vehicles"
+                <Label Text="Deleted Vehicles"
                        FontSize="18"
                        FontFamily="PoppinsSemiBold"
                        TextColor="#0A1931" />
-                <Label Text="These vehicles are hidden from the main list. Unarchive to bring them back."
+                <Label Text="These vehicles were deleted. Restore to re-add them to your fleet."
                        FontSize="12"
                        TextColor="#5B7AA5" />
 
-                <CollectionView ItemsSource="{Binding ArchivedVehicles}"
+                <CollectionView ItemsSource="{Binding DeletedVehicles}"
                                 HeightRequest="500">
 
                     <CollectionView.EmptyView>
@@ -81,12 +81,12 @@
                                 StrokeThickness="1"
                                 BackgroundColor="White">
                             <StackLayout Spacing="6" HorizontalOptions="Center">
-                                <Label Text="No archived vehicles"
+                                <Label Text="No deleted vehicles"
                                        FontSize="15"
                                        FontFamily="PoppinsMedium"
                                        TextColor="#0A1931"
                                        HorizontalOptions="Center" />
-                                <Label Text="Archived vehicles will appear here"
+                                <Label Text="Deleted vehicles will appear here"
                                        FontSize="12"
                                        TextColor="#5B7AA5"
                                        HorizontalOptions="Center" />
@@ -95,14 +95,14 @@
                     </CollectionView.EmptyView>
 
                     <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="m:Vehicle">
+                        <DataTemplate x:DataType="m:DeletedVehicleItem">
                             <Border Margin="0,5"
                                     Padding="16"
                                     StrokeShape="RoundRectangle 12"
                                     Stroke="#B0CBE8"
                                     StrokeThickness="1"
                                     BackgroundColor="White">
-                                <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="10">
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="8">
 
                                     <!-- Name + Type -->
                                     <HorizontalStackLayout Grid.Row="0" Spacing="10">
@@ -136,18 +136,24 @@
                                                TextColor="#1565C0" />
                                     </HorizontalStackLayout>
 
-                                    <!-- Unarchive Button -->
-                                    <Button Grid.Row="2"
-                                            Text="Unarchive"
+                                    <!-- Deleted timestamp -->
+                                    <Label Grid.Row="2"
+                                           Text="{Binding DeletedAtFormatted, StringFormat='Deleted: {0}'}"
+                                           FontSize="11"
+                                           TextColor="#7BA0C7" />
+
+                                    <!-- Restore Button -->
+                                    <Button Grid.Row="3"
+                                            Text="Restore"
                                             FontSize="13"
-                                            BackgroundColor="#87CEEB"
-                                            TextColor="#0A1931"
+                                            BackgroundColor="#0A1931"
+                                            TextColor="White"
                                             CornerRadius="10"
                                             Padding="20,10"
                                             HeightRequest="40"
                                             FontFamily="PoppinsSemiBold"
                                             HorizontalOptions="End"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.UnarchiveCommand}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RestoreDeletedCommand}"
                                             CommandParameter="{Binding .}" />
                                 </Grid>
                             </Border>

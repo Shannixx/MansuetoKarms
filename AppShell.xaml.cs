@@ -11,6 +11,7 @@ namespace MansuetoKarms
             Routing.RegisterRoute(nameof(CreateView), typeof(CreateView));
             Routing.RegisterRoute(nameof(UpdateView), typeof(UpdateView));
             Routing.RegisterRoute(nameof(ArchiveView), typeof(ArchiveView));
+            Routing.RegisterRoute(nameof(DeleteView), typeof(DeleteView));
         }
     }
 }

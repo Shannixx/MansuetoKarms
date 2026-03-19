@@ -45,6 +45,7 @@ namespace MansuetoKarms.ViewModels
         public ICommand NavigateToCreateCommand { get; }
         public ICommand NavigateToUpdateCommand { get; }
         public ICommand NavigateToArchiveCommand { get; }
+        public ICommand NavigateToDeleteCommand { get; }
         public ICommand SoftDeleteCommand { get; }
         public ICommand HardDeleteCommand { get; }
 
@@ -67,6 +68,11 @@ namespace MansuetoKarms.ViewModels
             NavigateToArchiveCommand = new Command(async () =>
             {
                 await Shell.Current.GoToAsync(nameof(ArchiveView));
+            });
+
+            NavigateToDeleteCommand = new Command(async () =>
+            {
+                await Shell.Current.GoToAsync(nameof(DeleteView));
             });
 
             // Archive = soft delete, moves to Archive section

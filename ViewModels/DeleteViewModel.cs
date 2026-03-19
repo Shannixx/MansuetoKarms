@@ -7,13 +7,14 @@ using MansuetoKarms.Services;
 
 namespace MansuetoKarms.ViewModels
 {
-    public class ArchiveViewModel : INotifyPropertyChanged
+    public class DeleteViewModel : INotifyPropertyChanged
     {
         private readonly VehicleService _vehicleService;
-        private string _title = "Archived Vehicles";
+        private readonly DeleteHistoryService _deleteHistoryService;
+        private string _title = "Deleted Vehicles";
         private bool _isBusy;
-        private ObservableCollection<Vehicle> _archivedVehicles = new();
-        private int _archivedCount;
+        private ObservableCollection<DeletedVehicleItem> _deletedVehicles = new();
+        private int _deletedCount;
 
         public string Title
         {
@@ -27,38 +28,42 @@ namespace MansuetoKarms.ViewModels
             set { _isBusy = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<Vehicle> ArchivedVehicles
+        public ObservableCollection<DeletedVehicleItem> DeletedVehicles
         {
-            get => _archivedVehicles;
-            set { _archivedVehicles = value; OnPropertyChanged(); }
+            get => _deletedVehicles;
+            set { _deletedVehicles = value; OnPropertyChanged(); }
         }
 
-        public int ArchivedCount
+        public int DeletedCount
         {
-            get => _archivedCount;
-            set { _archivedCount = value; OnPropertyChanged(); }
+            get => _deletedCount;
+            set { _deletedCount = value; OnPropertyChanged(); }
         }
 
-        public ICommand UnarchiveCommand { get; }
+        public ICommand RestoreDeletedCommand { get; }
         public ICommand GoBackCommand { get; }
 
-        public ArchiveViewModel(VehicleService vehicleService)
+        public DeleteViewModel(VehicleService vehicleService, DeleteHistoryService deleteHistoryService)
         {
             _vehicleService = vehicleService;
+            _deleteHistoryService = deleteHistoryService;
 
-            // Unarchive = restore from soft-delete back to active
-            UnarchiveCommand = new Command<Vehicle>(async (vehicle) =>
+            // Restore deleted = re-create the vehicle in the API from saved local data
+            RestoreDeletedCommand = new Command<DeletedVehicleItem>(async (item) =>
             {
-                if (vehicle == null) return;
+                if (item == null) return;
                 try
                 {
                     IsBusy = true;
-                    await _vehicleService.RestoreVehicleAsync(vehicle.Id);
+                    var vehicle = item.ToVehicle();
+                    await _vehicleService.CreateVehicleAsync(vehicle);
+                    _deleteHistoryService.RemoveDeletedVehicle(item);
                     await LoadDataAsync();
+                    await Shell.Current.DisplayAlert("Restored", $"{item.DisplayName} has been restored.", "OK");
                 }
                 catch (Exception ex)
                 {
-                    await Shell.Current.DisplayAlert("Error", $"Failed to unarchive: {ex.Message}", "OK");
+                    await Shell.Current.DisplayAlert("Error", $"Failed to restore: {ex.Message}", "OK");
                 }
                 finally
                 {
@@ -80,11 +85,10 @@ namespace MansuetoKarms.ViewModels
             {
                 IsBusy = true;
 
-                // Load archived vehicles from API (soft-deleted)
-                var allVehicles = await _vehicleService.GetVehiclesAsync();
-                var archived = allVehicles.Where(v => v.IsDeleted).ToList();
-                ArchivedVehicles = new ObservableCollection<Vehicle>(archived);
-                ArchivedCount = archived.Count;
+                // Load deleted vehicles from local storage
+                var deleted = _deleteHistoryService.GetDeletedVehicles();
+                DeletedVehicles = new ObservableCollection<DeletedVehicleItem>(deleted);
+                DeletedCount = deleted.Count;
             }
             catch (Exception ex)
             {

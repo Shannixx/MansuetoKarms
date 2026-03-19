@@ -32,12 +32,14 @@ namespace MansuetoKarms
             builder.Services.AddTransient<CreateViewModel>();
             builder.Services.AddTransient<UpdateViewModel>();
             builder.Services.AddTransient<ArchiveViewModel>();
+            builder.Services.AddTransient<DeleteViewModel>();
 
             // Register Views
             builder.Services.AddTransient<MainView>();
             builder.Services.AddTransient<CreateView>();
             builder.Services.AddTransient<UpdateView>();
             builder.Services.AddTransient<ArchiveView>();
+            builder.Services.AddTransient<DeleteView>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

@@ -13,6 +13,8 @@
 
             <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
             <converters:DeletedColorConverter x:Key="DeletedColorConverter" />
+            <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
+            <converters:BoolToTextColorConverter x:Key="BoolToTextColorConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
