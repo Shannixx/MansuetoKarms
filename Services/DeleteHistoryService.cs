@@ -46,8 +46,12 @@ namespace MansuetoKarms.Services
         public void RemoveDeletedVehicle(DeletedVehicleItem item)
         {
             var list = GetDeletedVehicles();
-            list.Remove(item);
-            SaveList(list);
+            var itemToRemove = list.FirstOrDefault(x => x.PlateNumber == item.PlateNumber && x.DeletedAt == item.DeletedAt);
+            if (itemToRemove != null)
+            {
+                list.Remove(itemToRemove);
+                SaveList(list);
+            }
         }
 
         private void SaveList(List<DeletedVehicleItem> list)

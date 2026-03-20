@@ -58,6 +58,7 @@ namespace MansuetoKarms.ViewModels
                     var vehicle = item.ToVehicle();
                     await _vehicleService.CreateVehicleAsync(vehicle);
                     _deleteHistoryService.RemoveDeletedVehicle(item);
+                    IsBusy = false; // Allow LoadDataAsync to execute
                     await LoadDataAsync();
                     await Shell.Current.DisplayAlert("Restored", $"{item.DisplayName} has been restored.", "OK");
                 }

@@ -89,6 +89,7 @@ namespace MansuetoKarms.ViewModels
                 {
                     IsBusy = true;
                     await _vehicleService.SoftDeleteVehicleAsync(vehicle.Id);
+                    IsBusy = false; // Allow LoadVehiclesAsync to execute
                     await LoadVehiclesAsync();
                 }
                 catch (Exception ex)
@@ -116,6 +117,7 @@ namespace MansuetoKarms.ViewModels
                     IsBusy = true;
                     _deleteHistoryService.AddDeletedVehicle(vehicle);
                     await _vehicleService.HardDeleteVehicleAsync(vehicle.Id);
+                    IsBusy = false; // Allow LoadVehiclesAsync to execute
                     await LoadVehiclesAsync();
                 }
                 catch (Exception ex)

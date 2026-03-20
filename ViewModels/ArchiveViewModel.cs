@@ -54,6 +54,7 @@ namespace MansuetoKarms.ViewModels
                 {
                     IsBusy = true;
                     await _vehicleService.RestoreVehicleAsync(vehicle.Id);
+                    IsBusy = false; // Allow LoadDataAsync to execute
                     await LoadDataAsync();
                 }
                 catch (Exception ex)
